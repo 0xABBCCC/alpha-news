@@ -126,6 +126,7 @@ img {
 .news-title {
     font-size: 16px;
     font-weight: 600;
+    word-break: break-all;
 }
 
 .news-body {
