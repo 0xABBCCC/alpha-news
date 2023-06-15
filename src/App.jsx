@@ -31,7 +31,7 @@ const App = () => {
 
     webSocket.current.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      console.log(data); // Log the parsed message data to the console
+      // console.log(data);
     
       const newData = {
         icon: data.icon ?? "https://pbs.twimg.com/profile_images/1541289166159622144/gaitivAo_400x400.jpg",
@@ -44,7 +44,7 @@ const App = () => {
         time: data.time
       }
     
-      console.log(newData)
+      // console.log(newData)
     
       setMessages(prevMessages => [...prevMessages, newData]);
     };    
@@ -77,32 +77,13 @@ const App = () => {
   }, []);
 
   const messagesEndRef = useRef(null);
-  const containerRef = useRef(null);
-  const [isAtBottom, setIsAtBottom] = useState(true);
-
-  const checkScroll = () => {
-    const container = containerRef.current;
-    const { scrollTop, scrollHeight, clientHeight } = container;
-    setIsAtBottom(scrollHeight - scrollTop === clientHeight);
-  };
 
   useEffect(() => {
-    const container = containerRef.current;
-    container.addEventListener('scroll', checkScroll);
-
-    return () => {
-      container.removeEventListener('scroll', checkScroll);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAtBottom) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isAtBottom]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return(
-    <div className='application-body' ref={containerRef}>
+    <div className='application-body'>
 
       {messages.map((message) => (
 
